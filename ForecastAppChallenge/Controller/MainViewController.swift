@@ -28,7 +28,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         customization()
         
-        apiManager.getWeather(by: "London")
     }
 
     func customization() {
