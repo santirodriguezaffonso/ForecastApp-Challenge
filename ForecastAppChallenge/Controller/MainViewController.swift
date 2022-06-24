@@ -8,6 +8,8 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    
+    let apiManager = APIManager()
 
     @IBOutlet weak var cityName: UILabel!
     @IBOutlet weak var temp: UILabel!
@@ -25,6 +27,8 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         customization()
+        
+        apiManager.getWeather(by: "London")
     }
 
     func customization() {
