@@ -28,23 +28,28 @@ class APIManager {
                 }
                 
                 if let data = data {
-                    //                    let dataString = String(data: data, encoding: .utf8)
-                    //                    print(dataString as Any) Safety check
-                    self.parseJSON(data)
+                    if let weather = self.parseJSON(data) {
+                        
+                    }
                 }
             }
             task.resume()
         }
     }
     
-    // function to decode the data and retreive a model
-    func parseJSON(_ weatherData: Data) {
+    // function to decode the data and bring back a model
+    func parseJSON(_ weatherData: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
-            let results = try decoder.decode(WeatherData.self, from: weatherData)
-            print(results.name)
+            let r = try decoder.decode(WeatherData.self, from: weatherData)
+            
+            let weather = WeatherModel(cityName: r.name, conditionId: r.weather[0].id, temperature: r.main.temp, tempMax: r.main.tempMax, tempMin: r.main.tempMin, pressure: r.main.pressure, humidity: r.main.humidity, longitude: r.coord.lon, latitude: r.coord.lat)
+            
+            print(weather.temperatureString)
+            return weather
         } catch {
             print("Decoding Error", error)
+            return nil
         }
     }
     
