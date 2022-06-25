@@ -7,28 +7,36 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+class SearchViewController: UIViewController {
     
-    let searchBar = UISearchBar()
-
+    @IBOutlet weak var searchTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        searchBar.delegate = self
-    }
-    
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         
+        searchTextField.delegate = self
+    }
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    
+    // "Search" button pressed by user:
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchTextField.endEditing(true)
+        return true
     }
     
+    // User try to deselect textField
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//
+//    }
     
-    
-    
-    
-    
-    
-    
+    // User end editing:                                    (This let you avoid repeat code)
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        //Next: Inside this method use the searchTextField.text to get the weather for that city
+        searchTextField.text = ""
+    }
+}
     
     
     
@@ -42,5 +50,3 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-
-}
