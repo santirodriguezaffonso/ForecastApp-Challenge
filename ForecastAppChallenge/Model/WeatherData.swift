@@ -15,8 +15,8 @@ struct WeatherData: Codable {
 }
 
 struct Coordinates: Codable {
-    let lat: Double
     let lon: Double
+    let lat: Double
 }
 
 struct Weather: Codable {
