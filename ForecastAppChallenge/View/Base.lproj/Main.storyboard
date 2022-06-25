@@ -288,11 +288,11 @@
                     <tabBarItem key="tabBarItem" title="Weather" image="sun.and.horizon" catalog="system" id="JJA-gH-Sky"/>
                     <connections>
                         <outlet property="cityName" destination="HhM-Cz-HL6" id="j36-sx-iMU"/>
-                        <outlet property="humidity" destination="8D2-X0-Kes" id="RlH-fb-wtb"/>
+                        <outlet property="humidityLabel" destination="8D2-X0-Kes" id="RlH-fb-wtb"/>
                         <outlet property="iconImage" destination="LpZ-K9-ez8" id="pTg-gX-fDH"/>
-                        <outlet property="pressure" destination="fjz-Fv-R0U" id="MuC-LC-ROW"/>
+                        <outlet property="pressureLabel" destination="fjz-Fv-R0U" id="MuC-LC-ROW"/>
                         <outlet property="shadowBox" destination="etT-LC-nwt" id="j9M-bd-6Ol"/>
-                        <outlet property="temp" destination="tyD-2I-CF4" id="lo9-Gm-9sz"/>
+                        <outlet property="tempLabel" destination="tyD-2I-CF4" id="jIi-ms-NWi"/>
                         <outlet property="tempMax" destination="Xgd-US-WSw" id="Lwg-BZ-Uu3"/>
                         <outlet property="tempMin" destination="JYh-xo-IlB" id="sfL-sl-wTs"/>
                     </connections>

@@ -9,31 +9,41 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    let apiManager = APIManager()
+    var apiManager = APIManager()
+    
+    var weatherInfo: WeatherModel?
 
     @IBOutlet weak var cityName: UILabel!
-    @IBOutlet weak var temp: UILabel!
+    @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
     
     @IBOutlet weak var tempMax: UILabel!
     @IBOutlet weak var tempMin: UILabel!
     
-    @IBOutlet weak var pressure: UILabel!
-    @IBOutlet weak var humidity: UILabel!
+    @IBOutlet weak var pressureLabel: UILabel!
+    @IBOutlet weak var humidityLabel: UILabel!
     
     @IBOutlet weak var shadowBox: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         customization()
         
     }
-
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        cityName.text = weatherInfo?.cityName
+//    }
+    
     func customization() {
         shadowBox.layer.cornerRadius = 10
     }
     
     
+//    func didUpdateWeather(weather: WeatherModel) {
+//        print(weather.temperatureString)
+//    }
 }
 
