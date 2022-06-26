@@ -13,8 +13,8 @@ struct WeatherModel {
     let conditionId: Int
     let temperature: Double
     
-    let tempMax: Double
-    let tempMin: Double
+    let maxTemp: Double
+    let minTemp: Double
     
     let pressure: Int
     let humidity: Int
@@ -24,6 +24,14 @@ struct WeatherModel {
     
     var temperatureString: String {
        return String(format: "%.0f", temperature)
+    }
+    
+    var temperatureMax: String {
+       return String(format: "%.0f", maxTemp)
+    }
+    
+    var temperatureMin: String {
+       return String(format: "%.0f", minTemp)
     }
     
     var conditionName: String {

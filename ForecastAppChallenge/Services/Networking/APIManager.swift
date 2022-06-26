@@ -7,20 +7,20 @@
 
 import Foundation
 
-//protocol ApiManagerDelegate {
-//    func didUpdateWeather(weather: WeatherModel)
-//}
+protocol ApiManagerDelegate {
+    func didUpdateWeather(weather: WeatherModel)
+}
 
 class APIManager {
     
-//    var delegate: ApiManagerDelegate?
+    var delegate: ApiManagerDelegate?
     
     private let url = "https://api.openweathermap.org/data/2.5/weather?&appid=7c76f28176126711c0afd661e413f671&units=metric"
     
     //function to bring the city name
     func getWeather(by cityName: String) {
         let urlString = "\(url)&q=\(cityName)"
-                 //print(urlString) //Safety check
+        //print(urlString) //Safety check
         performRequest(with: urlString)
     }
     
@@ -36,12 +36,7 @@ class APIManager {
                 if let data = data {
                     //print(String(data: data, encoding: .utf8)) //Safety check
                     if let weather = self.parseJSON(data) {
-                        DispatchQueue.main.async {
-                            let mainVC = MainViewController()
-                            mainVC.weatherInfo = weather
-                        }
-                        
-//                        self.delegate?.didUpdateWeather(weather: weather)
+                        self.delegate?.didUpdateWeather(weather: weather)
                     }
                 }
             }
@@ -55,9 +50,9 @@ class APIManager {
         do {
             let r = try decoder.decode(WeatherData.self, from: weatherData)
             
-            let weather = WeatherModel(cityName: r.name, conditionId: r.weather[0].id, temperature: r.main.temp, tempMax: r.main.tempMax, tempMin: r.main.tempMin, pressure: r.main.pressure, humidity: r.main.humidity, longitude: r.coord.lon, latitude: r.coord.lat)
+            let weather = WeatherModel(cityName: r.name, conditionId: r.weather[0].id, temperature: r.main.temp, maxTemp: r.main.tempMax, minTemp: r.main.tempMin, pressure: r.main.pressure, humidity: r.main.humidity, longitude: r.coord.lon, latitude: r.coord.lat)
             
-            //print(weather.temperature)
+//            print(weather.cityName)
             return weather
         } catch {
             print("Decoding Error", error)
