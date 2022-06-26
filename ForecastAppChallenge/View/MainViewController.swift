@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MainViewController: UIViewController, ApiManagerDelegate {
     
+    var locationManager = CLLocationManager()
     var apiManager = APIManager()
 
     @IBOutlet weak var cityName: UILabel!
@@ -24,17 +26,23 @@ class MainViewController: UIViewController, ApiManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        locationManager.delegate = self
+        locationServices()
         apiManager.delegate = self
         searchTextField.delegate = self
-        
         customization()
     }
-    
     func customization() {
         shadowBox.layer.cornerRadius = 10
     }
     
+    func locationServices() {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    }
+    
     @IBAction func currentLocationButton(_ sender: UIButton) {
+        locationManager.requestLocation()
     }
    
     
@@ -69,5 +77,22 @@ extension MainViewController: UITextFieldDelegate {
             apiManager.getWeather(by: city)
         }
         searchTextField.text = ""
+    }
+}
+
+//MARK: - Location
+
+extension MainViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            apiManager.getWeather(by: latitude, by: longitude)
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
     }
 }

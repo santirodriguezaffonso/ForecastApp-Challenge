@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol ApiManagerDelegate {
     func didUpdateWeather(weather: WeatherModel)
@@ -20,6 +21,12 @@ class APIManager {
     //function to bring the city name
     func getWeather(by cityName: String) {
         let urlString = "\(url)&q=\(cityName)"
+        //print(urlString) //Safety check
+        performRequest(with: urlString)
+    }
+    
+    func getWeather(by latitude: CLLocationDegrees, by longitude: CLLocationDegrees) {
+        let urlString = "\(url)&lat=\(latitude)&lon=\(longitude)"
         //print(urlString) //Safety check
         performRequest(with: urlString)
     }

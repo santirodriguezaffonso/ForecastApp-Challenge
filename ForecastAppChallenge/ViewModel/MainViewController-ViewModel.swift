@@ -7,8 +7,10 @@
 
 import Foundation
 
- class MainViewControllerViewModel {
-     
-     
-    
+extension MainViewController {
+    class MainViewControllerViewModel {
+        
+        
+    }
 }
+
