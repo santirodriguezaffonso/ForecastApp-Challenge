@@ -6,10 +6,11 @@
 //
 
 import UIKit
-import CoreLocation
+import MapKit
 
-class MainViewController: UIViewController, ApiManagerDelegate {
+class MainViewController: UIViewController {
     
+    var viewModel = MainViewControllerViewModel()
     var locationManager = CLLocationManager()
     var apiManager = APIManager()
 
@@ -22,18 +23,29 @@ class MainViewController: UIViewController, ApiManagerDelegate {
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var shadowBox: UIView!
     @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         locationManager.delegate = self
-        locationServices()
-        apiManager.delegate = self
         searchTextField.delegate = self
-        customization()
+        tableView.dataSource = self
+        apiManager.delegate = self
+        tableView.delegate = self
+        locationServices()
+        initialStyles()
     }
-    func customization() {
+    
+    @IBAction func currentLocationButton(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+    
+    func initialStyles() {
+        tableView.isHidden = true
         shadowBox.layer.cornerRadius = 10
+        mapView.layer.cornerRadius = 10
+        tableView.layer.cornerRadius = 5
     }
     
     func locationServices() {
@@ -41,11 +53,20 @@ class MainViewController: UIViewController, ApiManagerDelegate {
         locationManager.requestLocation()
     }
     
-    @IBAction func currentLocationButton(_ sender: UIButton) {
-        locationManager.requestLocation()
+    func setupMap() {
+        mapView.showsUserLocation = true
+        mapView.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 1200, maxCenterCoordinateDistance: 10000)
     }
-   
     
+    func smoothness(toggle: Bool) {
+            UIView.animate(withDuration: 0.3) {
+                self.tableView.isHidden = toggle
+        }
+    }
+}
+
+//MARK: - API Manager Delegate
+extension MainViewController: ApiManagerDelegate {
     func didUpdateWeather(weather: WeatherModel) {
         DispatchQueue.main.async { [self] in
             cityName.text = weather.cityName
@@ -55,15 +76,19 @@ class MainViewController: UIViewController, ApiManagerDelegate {
             tempMin.text = weather.temperatureMin
             pressureLabel.text = String(weather.pressure)
             humidityLabel.text = String(weather.humidity)
+            mapView.centerCoordinate.latitude = weather.latitude
+            mapView.centerCoordinate.longitude = weather.longitude
         }
+        setupMap()
     }
 }
 
-
-
 //MARK: - UITextField Methods
-
 extension MainViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        tableView.reloadData()
+        smoothness(toggle: false)
+    }
     
     // "Search" button pressed by user:
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -75,13 +100,40 @@ extension MainViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let city = searchTextField.text {
             apiManager.getWeather(by: city)
+            if searchTextField.text != "" {
+                viewModel.getToStore(city)
+            }
         }
         searchTextField.text = ""
+        smoothness(toggle: true)
     }
 }
 
-//MARK: - Location
+//MARK: - UITableView Methods
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let array = viewModel.history.count
+        return array
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reusableCell", for: indexPath)
+        var content = cell.defaultContentConfiguration()
+        content.text = viewModel.history[indexPath.row]
+        content.image = UIImage(systemName: "arrowshape.turn.up.backward")
+        cell.contentConfiguration = content
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        apiManager.getWeather(by: viewModel.history[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: true)
+        smoothness(toggle: true)
+        searchTextField.endEditing(true)
+    }
+}
 
+//MARK: - User Location
 extension MainViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {

@@ -7,10 +7,19 @@
 
 import Foundation
 
-extension MainViewController {
-    class MainViewControllerViewModel {
+
+class MainViewControllerViewModel {
+    
+    var history: [String] = []
+    
+    func getToStore(_ name: String) {
+        history.insert(name, at: 0)
         
-        
+        if history.count > 5 {
+            history.removeLast()
+        }
     }
+    
 }
+
 
