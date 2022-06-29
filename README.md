@@ -8,7 +8,6 @@
 ForecastApp is an challenge App created during a job interview process for IT Crowd company.
 
 ## App Demo
-![Initialization-2](https://user-images.githubusercontent.com/100100565/176048867-1fa10533-5c8d-4b18-9c74-76595065fa28.gif)
 ![Simulator Screen Recording - iPhone 11 Pro - 2022-06-27 at 19 15 59 copy 3](https://user-images.githubusercontent.com/100100565/176049233-c09d66b5-8ee4-4771-81fe-6a51c5f4f7d2.gif)
 
 
