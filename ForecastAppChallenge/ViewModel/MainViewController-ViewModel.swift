@@ -19,6 +19,10 @@ class MainViewControllerViewModel {
             history.removeLast()
         }
     }
+    
+    func deletion(at index: Int) {
+        history.remove(at: index)
+    }
 }
 
 

@@ -158,9 +158,9 @@ extension MainViewController: SwipeTableViewCellDelegate {
         
         guard orientation == .right else { return nil}
         
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            self.viewModel.history.remove(at: indexPath.row)
-            tableView.reloadData()
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [self] action, indexPath in
+            viewModel.deletion(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         return [deleteAction]
     }
