@@ -59,8 +59,10 @@ class MainViewController: UIViewController {
     }
     
     func smoothness(toggle: Bool) {
+        if viewModel.history.count > 0 {
             UIView.animate(withDuration: 0.3) {
-                self.tableView.isHidden = toggle
+                    self.tableView.isHidden = toggle
+            }
         }
     }
 }
