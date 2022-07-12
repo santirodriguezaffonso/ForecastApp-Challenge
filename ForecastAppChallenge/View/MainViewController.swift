@@ -1,12 +1,12 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  ForecastAppChallenge
-//
+
 //  Created by Santiago Rodriguez Affonso on 24/06/2022.
-//
 
 import UIKit
 import MapKit
+import SwipeCellKit
 
 class MainViewController: UIViewController {
     
@@ -119,10 +119,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reusableCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reusableCell", for: indexPath) as! SwipeTableViewCell
         var content = cell.defaultContentConfiguration()
         content.text = viewModel.history[indexPath.row]
         content.image = UIImage(systemName: "arrowshape.turn.up.backward")
+        cell.delegate = self
         cell.contentConfiguration = content
         return cell
     }
@@ -148,5 +149,19 @@ extension MainViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+}
+
+ //MARK: - SwipeCellKit methods
+extension MainViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        
+        guard orientation == .right else { return nil}
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            self.viewModel.history.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+        return [deleteAction]
     }
 }

@@ -17,6 +17,7 @@
 		A266E0A428660A7100CCBCA7 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266E0A328660A7100CCBCA7 /* WeatherData.swift */; };
 		A266E0A928660AE600CCBCA7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266E0A828660AE600CCBCA7 /* APIManager.swift */; };
 		A266E0AB2867820A00CCBCA7 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A266E0AA2867820A00CCBCA7 /* WeatherModel.swift */; };
+		A2F901CC287DE2BF00AB6F95 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2F901CB287DE2BF00AB6F95 /* SwipeCellKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2F901CC287DE2BF00AB6F95 /* SwipeCellKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +137,9 @@
 			dependencies = (
 			);
 			name = ForecastAppChallenge;
+			packageProductDependencies = (
+				A2F901CB287DE2BF00AB6F95 /* SwipeCellKit */,
+			);
 			productName = ForecastAppChallenge;
 			productReference = A266E0862865F23E00CCBCA7 /* ForecastAppChallenge.app */;
 			productType = "com.apple.product-type.application";
@@ -163,6 +168,9 @@
 				Base,
 			);
 			mainGroup = A266E07D2865F23E00CCBCA7;
+			packageReferences = (
+				A2F901CA287DE2BF00AB6F95 /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
+			);
 			productRefGroup = A266E0872865F23E00CCBCA7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -418,6 +426,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A2F901CA287DE2BF00AB6F95 /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A2F901CB287DE2BF00AB6F95 /* SwipeCellKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2F901CA287DE2BF00AB6F95 /* XCRemoteSwiftPackageReference "SwipeCellKit" */;
+			productName = SwipeCellKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A266E07E2865F23E00CCBCA7 /* Project object */;
 }
