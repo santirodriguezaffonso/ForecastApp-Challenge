@@ -58,10 +58,14 @@ class MainViewController: UIViewController {
         mapView.cameraZoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 1200, maxCenterCoordinateDistance: 10000)
     }
     
-    func smoothness(toggle: Bool) {
-        if viewModel.history.count > 0 {
+    func showTableView(toggle: Bool) {
+        if viewModel.history.count == 0 && tableView.isHidden == false {
             UIView.animate(withDuration: 0.3) {
-                    self.tableView.isHidden = toggle
+                self.tableView.isHidden = toggle
+            }
+        } else if viewModel.history.count > 0 {
+            UIView.animate(withDuration: 0.3) {
+                self.tableView.isHidden = toggle
             }
         }
     }
@@ -89,7 +93,7 @@ extension MainViewController: ApiManagerDelegate {
 extension MainViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         tableView.reloadData()
-        smoothness(toggle: false)
+        showTableView(toggle: false)
     }
     
     // "Search" button pressed by user:
@@ -107,7 +111,7 @@ extension MainViewController: UITextFieldDelegate {
             }
         }
         searchTextField.text = ""
-        smoothness(toggle: true)
+        showTableView(toggle: true)
     }
 }
 
@@ -131,7 +135,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         apiManager.getWeather(by: viewModel.history[indexPath.row])
         tableView.deselectRow(at: indexPath, animated: true)
-        smoothness(toggle: true)
+        showTableView(toggle: true)
         searchTextField.endEditing(true)
     }
 }
@@ -161,6 +165,10 @@ extension MainViewController: SwipeTableViewCellDelegate {
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { [self] action, indexPath in
             viewModel.deletion(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            if viewModel.history.isEmpty {
+                showTableView(toggle: true)
+            }
         }
         return [deleteAction]
     }
