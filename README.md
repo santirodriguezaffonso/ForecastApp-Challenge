@@ -18,7 +18,7 @@ ForecastApp is an challenge App created during a job interview process for IT Cr
 - API REST
 - CoreLocation
 - DropDownList (TableView)
-- [SwipeCellKit](https://github.com/SwipeCellKit/SwipeCellKit) library (**in progress***)
+- [SwipeCellKit](https://github.com/SwipeCellKit/SwipeCellKit) library
 
 
 ![Final Image](https://user-images.githubusercontent.com/100100565/172270362-2ff7b9f2-9678-458d-ac36-f5e4f3f7a772.png)
