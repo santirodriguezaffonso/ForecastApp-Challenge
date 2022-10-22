@@ -5,7 +5,7 @@
 ![Platform](https://img.shields.io/badge/plataform-iOS-white)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-santiagorodriguezaffonso-blue)](https://www.linkedin.com/in/santiagorodriguezaffonso/)
 
-ForecastApp is an challenge App created during a job interview process for IT Crowd company.
+ForecastApp is a challenge App created during a job interview process for IT Crowd company.
 
 ## App Demo
 ![Simulator Screen Recording - iPhone 11 Pro - 2022-06-27 at 19 15 59 copy 3](https://user-images.githubusercontent.com/100100565/176049233-c09d66b5-8ee4-4771-81fe-6a51c5f4f7d2.gif)
